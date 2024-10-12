@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>marry me or not</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <style>
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(270deg, rgba(255, 105, 180, 0.8), rgba(51, 204, 51, 0.8), rgba(102, 204, 204, 0.8), rgba(255, 204, 0, 0.8), rgba(250, 118, 169, 0.8));
+    background-size: 400% 100%;
+    animation: shimmer 20s infinite linear;
+}
+
+          body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6e6;
+        }
+        .heart {
+            font-size: 100px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .confession {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .response-buttons {
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: red;
+        }
+        .avoid-button {
+            position: absolute;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: red;
+            display: none;
+        }
+    
+
+
+        #yesVideo {
+  display: none;
+  max-width: 50%;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.10s;
+  animation: fadeIn 5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#yesVideo.show {
+  display: block;
+  animation: fadeIn 0.5s forwards;
+}
+
+.rain-container {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: 100vh;
+  display: none;
+}
+
+.rain-drop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 10px;
+  background-color: #666;
+  animation: rain 3s linear infinite;
+}
+
+@keyframes rain {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+    </style>
+</head>
+<body>
+    <div class="rain-container"></div>
+<img id="hiddenPicture" src="cattherock.jpg" alt="Hidden Picture" style="display: none; max-width: 100px; margin-top: 20px;">
+
+<video id="yesVideo" style="display: none; max-width: 50%; margin-top: 20px;" controls>
+    <source src="donnysavage1.mp4" type="video/mp4">   
+</video>
+<img id="leftPicture" src="catsad.jpg" alt="Left Picture" style="display: none; position: fixed; top: 10px; left: 10px; max-width: 100px;">
+<img id="rightPicture" src="catsad.jpg" alt="Right Picture" style="display: none; position: fixed; top: 10px; right: 10px; max-width: 100px;">
+    </div>
+    <div class="heart">❤️</div>
+    <div class="confession">would you marry me?</div>
+    <div class="response-buttons">
+        <button id="yesBtn">Yes</button>
+        
+        <button id="noBtn">No</button>
+    </div>
+    <button id="avoidBtn" class="avoid-button">HELL NAH</button>
+
+    <button id="tryAgainBtn" style="display: none; margin-top: 20px;">Try Again</button>
+    <audio id="backgroundMusic" loop>
+        <source src="usherheydaddy.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="noButtonMusic">
+        <source src="boomsound.mp3" type="audio/mpeg">
+    </audio>
+         
+
+    </div>
+  
+
+    <script>
+        const heart = document.querySelector('.heart');
+        const confession = document.querySelector('.confession');
+        const responseButtons = document.querySelector('.response-buttons');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const avoidBtn = document.getElementById('avoidBtn');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const noButtonMusic = document.getElementById('noButtonMusic');
+        let isConfessionVisible = false;
+
+        const hiddenPicture = document.getElementById('hiddenPicture');
+
+heart.addEventListener('click', () => {
+    if (!isConfessionVisible) {
+        confession.style.opacity = '1';
+        responseButtons.style.opacity = '1';
+        hiddenPicture.style.display = 'block'; // Show the picture
+        isConfessionVisible = true;
+    } else {
+        confession.style.opacity = '0';
+        responseButtons.style.opacity = '0';
+        hiddenPicture.style.display = 'none'; // Hide the picture
+        isConfessionVisible = false;
+
+        
+    }
+});
+
+
+        yesBtn.addEventListener('click', () => {
+            confession.textContent = "YESSSSSSSSSSSSSSSSSS!";
+            responseButtons.style.display = 'none';
+            avoidBtn.style.display = 'none';
+            hiddenPicture.style.display = 'none'; // Hide the picture
+            heart.style.animation = 'none';
+            heart.offsetHeight; /* trigger reflow */
+            heart.textContent = "❤️";
+    heart.style.fontSize = "100px";
+    heart.style.animation = "none";
+            heart.style.animation = 'pulse 0.5s infinite';
+            
+       
+            // Add confetti effect
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
+
+            yesVideo.style.opacity = 0;
+  yesVideo.style.display = 'block';
+  setTimeout(() => {
+    yesVideo.style.opacity = 1;
+  }, 0); // Start the fade-in animation immediately
+  setTimeout(() => {
+
+    yesVideo.play().catch(e => console.error("Error playing video:", e));
+  }, 500);
+            // Play background music
+            backgroundMusic.play().catch(e => console.error("Error playing music:", e));
+          
+            document.body.classList.add('shimmer');
+        });
+
+        noBtn.addEventListener('click', () => {
+            confession.textContent = "Are you sure? Maybe you want to avoid answering?";
+            responseButtons.style.display = 'none';
+            avoidBtn.style.display = 'block';
+            hiddenPicture.style.display = 'none'; // Hide the picture
+            moveAvoidButton();
+            
+            document.getElementById('leftPicture').style.display = 'block';
+            document.getElementById('rightPicture').style.display = 'block';
+
+            heart.textContent = "💔";
+    heart.style.fontSize = "100px";
+    heart.style.animation = "none";
+
+            // Play no button music
+            noButtonMusic.play().catch(e => console.error("Error playing no button sound:", e));
+
+            const rainContainer = document.querySelector('.rain-container');
+  rainContainer.style.display = 'block';
+  for (let i = 0; i < 500; i++) {
+    const rainDrop = document.createElement('div');
+    rainDrop.className = 'rain-drop';
+    rainDrop.style.left = `${Math.random() * window.innerWidth}px`;
+    rainDrop.style.top = `${Math.random() * -100}px`;
+    rainDrop.style.width = `${Math.random() * 2 + 1}px`;
+    rainDrop.style.height = `${Math.random() * 10 + 5}px`;
+    rainDrop.style.background = `rgba(0, 0, 0, ${Math.random() * 0.5 + 0.5})`;
+    rainDrop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+    rainContainer.appendChild(rainDrop);
+  }
+  setTimeout(() => {
+    rainContainer.style.display = 'none';
+  }, 3000); // Remove rain effect after 3 seconds
+
+        });
+
+        function moveAvoidButton() {
+            const maxWidth = window.innerWidth - avoidBtn.offsetWidth;
+            const maxHeight = window.innerHeight - avoidBtn.offsetHeight;
+            avoidBtn.style.left = Math.random() * maxWidth + 'px';
+            avoidBtn.style.top = Math.random() * maxHeight + 'px';
+        }
+
+        avoidBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveAvoidButton();
+        });
+
+        avoidBtn.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            moveAvoidButton();
+        });
+
+        const tryAgainBtn = document.getElementById('tryAgainBtn');
+
+function resetPage() {
+    confession.textContent = "would you marry me?";
+    confession.style.opacity = '0';
+    responseButtons.style.opacity = '0';
+    responseButtons.style.display = 'block';
+    avoidBtn.style.display = 'none';
+    hiddenPicture.style.display = 'none';
+    yesVideo.style.display = 'none';
+    yesVideo.pause();
+    yesVideo.currentTime = 0;
+    heart.textContent = "❤️";
+    heart.style.fontSize = "100px";
+    heart.style.animation = "none";
+    heart.style.animation = 'pulse 1.5s infinite';
+    isConfessionVisible = false;
+    tryAgainBtn.style.display = 'none';
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+    document.getElementById('leftPicture').style.display = 'none';
+        // Hide the right picture
+        document.getElementById('rightPicture').style.display = 'none';
+        document.body.classList.remove('shimmer');
+}
+
+tryAgainBtn.addEventListener('click', resetPage);
+
+function showTryAgainButton() {
+    tryAgainBtn.style.display = 'block';
+
+     
+}
+
+yesBtn.addEventListener('click', () => {
+    // ... (existing code)
+
+    showTryAgainButton();
+});
+
+noBtn.addEventListener('click', () => {
+    // ... (existing code)
+
+    showTryAgainButton();
+});
+
+avoidBtn.addEventListener('mouseenter', () => {
+    moveAvoidButton();
+});
+
+avoidBtn.addEventListener('click', () => {
+    confession.textContent = "You can't avoid love forever!";
+    avoidBtn.style.display = 'none';
+    showTryAgainButton();
+});
+
+
+    </script>
+       
+</body>
+</html>
