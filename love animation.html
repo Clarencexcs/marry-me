@@ -77,7 +77,7 @@
         #yesVideo {
   display: none;
   max-width: 70%;
-  margin-top: 20px;
+  margin-top: 30px;
   opacity: 0;
   transition: opacity 0.10s;
   animation: fadeIn 5s forwards;
@@ -131,7 +131,7 @@
     <div class="rain-container"></div>
 <img id="hiddenPicture" src="cattherock.jpg" alt="Hidden Picture" style="display: none; max-width: 100px; margin-top: 20px;">
 
-<video id="yesVideo" style="display: none; max-width: 70%; margin-top: 20px;" controls>
+<video id="yesVideo" style="display: none; max-width: 70%; margin-top: 30px;" controls>
     <source src="donnysavage1.mp4" type="video/mp4">   
 </video>
 <img id="leftPicture" src="catsad.jpg" alt="Left Picture" style="display: none; position: fixed; top: 10px; left: 10px; max-width: 100px;">
@@ -279,7 +279,7 @@ heart.addEventListener('click', () => {
         const tryAgainBtn = document.getElementById('tryAgainBtn');
 
 function resetPage() {
-    confession.textContent = "would you marry me?";
+    confession.textContent = "will you marry me?";
     confession.style.opacity = '0';
     responseButtons.style.opacity = '0';
     responseButtons.style.display = 'block';
